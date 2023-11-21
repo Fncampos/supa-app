@@ -38,7 +38,10 @@
                         <input type="text" name="telefone" id="input-telefone" class="form-label"> 
 
                         <label for="input-email" class="form-label">E-mail: </label>
-                        <input type="email" name="email" id="input-email" class="form-label">               
+                        <input type="email" name="email" id="input-email" class="form-label">
+                        
+                        <label for="input-obs" class="form-label">OBS: </label>
+                        <input type="text" name="obs" id="input-obs" class="form-label"> 
                     </div>
                     <input type="button" id="btn-salvar" value="Salvar">
                     <input type="button" id="btn-cancelar" value="Cancelar">
@@ -53,6 +56,7 @@
             const apiUrl = 'https://qmbiotwcatlvkjlbkypi.supabase.co/rest/v1/contato';
             const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtYmlvdHdjYXRsdmtqbGJreXBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA1MTg1OTcsImV4cCI6MjAxNjA5NDU5N30.6FDm5IJ6kzGVjqWWXfddMpwQNghhQ-PjtPWBuVle2Ew';
             const apiAuthorization = 'Bearer ' + apiKey;
+            const date = new Date();
 
             let consultarContatos = (url) => {
                 $.ajax({
@@ -74,7 +78,9 @@
                                     '<td>' + contato.nome + '</td>' +
                                     '<td>' + contato.telefone + '</td>' +
                                     '<td>' + contato.email + '</td>' +
-                                    '<td><i class="bi bi-pencil-fill" onclick="editarContato(' + contato.id + ',\'' + contato.nome + '\',\'' + contato.telefone + '\',\'' + contato.email + '\');"></i></td>' +
+                                    '<td>' + contato.obs + '</td>' +
+                                    '<td>' + contato.dtcontato + '</td>' +
+                                    '<td><i class="bi bi-pencil-fill" onclick="editarContato(' + contato.id + ',\'' + contato.nome + '\',\'' + contato.telefone + '\',\'' + contato.email+ '\',\'' + contato.obs + '\');"></i></td>' +
                                     '<td><i class="bi bi-trash-fill" onclick="apagarContato(' + contato.id + ');"></i></td>' +
                                     '</tr>';
                         }
@@ -106,7 +112,7 @@
                 } // fim confirm
             };
 
-            let editarContato = (id, nome, telefone, email) => {
+            let editarContato = (id, nome, telefone, email, obs) => {
                 editando = true;
                 idContatoEditando = id;
                 $('#form-titulo').html('Editar Contato');
@@ -114,6 +120,7 @@
                 $('#input-nome').val(nome.toUpperCase());
                 $('#input-telefone').val(telefone);
                 $('#input-email').val(email);
+                $('#input-obs').val(obs.toUpperCase());
             };
 
             $('#btn-novo').click(() => {
@@ -124,6 +131,7 @@
                 $('#input-nome').val('');
                 $('#input-telefone').val('');
                 $('#input-email').val('');
+                $('#input-obs').val('');
             });
 
             $('#btn-cancelar').click(() => {
@@ -138,7 +146,9 @@
                 let dados = {
                     nome: $('#input-nome').val().toUpperCase(),
                     telefone: $('#input-telefone').val(),
-                    email: $('#input-email').val()
+                    email: $('#input-email').val(),
+                    obs: $('#input-obs').val(),
+                    dtcontato: date
                 };
 
                 let type, url;
