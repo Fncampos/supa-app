@@ -70,7 +70,7 @@
                         'Authorization': apiAuthorization
                     },
                     success: (contatos) => {
-                        let contatosStr = '<tr><th>Id</th><th>Nome</th><th>Telefone</th><th>E-mail</th><th></th><th></th></tr>';
+                        let contatosStr = '<tr><th>Id</th><th>Nome</th><th>Telefone</th><th>E-mail</th><th>OBS</th><th>DATA</th></tr>';
                         for (contato of contatos) {
                             contatosStr +=
                                     '<tr>' +
